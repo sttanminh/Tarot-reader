@@ -1,0 +1,203 @@
+[
+    {
+      "name": "The Fool",
+      "arcana": "Major",
+      "meaning": "New beginnings, adventure, spontaneity, innocence"
+    },
+    {
+      "name": "The Magician",
+      "arcana": "Major",
+      "meaning": "Manifestation, resourcefulness, power, inspired action"
+    },
+    {
+      "name": "The High Priestess",
+      "arcana": "Major",
+      "meaning": "Intuition, subconscious mind, divine feminine, mystery"
+    },
+    {
+      "name": "The Empress",
+      "arcana": "Major",
+      "meaning": "Fertility, creativity, abundance, nurturing"
+    },
+    {
+      "name": "The Emperor",
+      "arcana": "Major",
+      "meaning": "Authority, stability, structure, leadership"
+    },
+    {
+      "name": "The Hierophant",
+      "arcana": "Major",
+      "meaning": "Spiritual wisdom, traditions, conformity, learning"
+    },
+    {
+      "name": "The Lovers",
+      "arcana": "Major",
+      "meaning": "Love, harmony, relationships, choices"
+    },
+    {
+      "name": "The Chariot",
+      "arcana": "Major",
+      "meaning": "Control, determination, willpower, victory"
+    },
+    {
+      "name": "Strength",
+      "arcana": "Major",
+      "meaning": "Courage, inner strength, patience, compassion"
+    },
+    {
+      "name": "The Hermit",
+      "arcana": "Major",
+      "meaning": "Soul-searching, introspection, guidance, solitude"
+    },
+    {
+      "name": "Wheel of Fortune",
+      "arcana": "Major",
+      "meaning": "Luck, karma, life cycles, destiny"
+    },
+    {
+      "name": "Justice",
+      "arcana": "Major",
+      "meaning": "Fairness, truth, law, accountability"
+    },
+    {
+      "name": "The Hanged Man",
+      "arcana": "Major",
+      "meaning": "Sacrifice, new perspective, surrender, letting go"
+    },
+    {
+      "name": "Death",
+      "arcana": "Major",
+      "meaning": "Endings, transformation, transition, rebirth"
+    },
+    {
+      "name": "Temperance",
+      "arcana": "Major",
+      "meaning": "Balance, moderation, patience, purpose"
+    },
+    {
+      "name": "The Devil",
+      "arcana": "Major",
+      "meaning": "Addiction, materialism, powerlessness, temptation"
+    },
+    {
+      "name": "The Tower",
+      "arcana": "Major",
+      "meaning": "Sudden change, upheaval, chaos, revelation"
+    },
+    {
+      "name": "The Star",
+      "arcana": "Major",
+      "meaning": "Hope, inspiration, renewal, spirituality"
+    },
+    {
+      "name": "The Moon",
+      "arcana": "Major",
+      "meaning": "Illusions, fear, anxiety, intuition"
+    },
+    {
+      "name": "The Sun",
+      "arcana": "Major",
+      "meaning": "Joy, success, vitality, positivity"
+    },
+    {
+      "name": "Judgment",
+      "arcana": "Major",
+      "meaning": "Self-reflection, reckoning, awakening, clarity"
+    },
+    {
+      "name": "The World",
+      "arcana": "Major",
+      "meaning": "Completion, accomplishment, travel, fulfillment"
+    },
+    {
+      "name": "Ace of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "New relationships, emotional connection, creativity"
+    },
+    {
+      "name": "Two of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Partnership, harmony, mutual attraction"
+    },
+    {
+      "name": "Three of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Celebration, friendship, community"
+    },
+    {
+      "name": "Four of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Contemplation, apathy, reevaluation"
+    },
+    {
+      "name": "Five of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Loss, grief, disappointment"
+    },
+    {
+      "name": "Six of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Nostalgia, memories, innocence"
+    },
+    {
+      "name": "Seven of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Choices, illusions, wishful thinking"
+    },
+    {
+      "name": "Eight of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Walking away, searching for meaning, transition"
+    },
+    {
+      "name": "Nine of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Contentment, satisfaction, wish fulfillment"
+    },
+    {
+      "name": "Ten of Cups",
+      "arcana": "Minor",
+      "suit": "Cups",
+      "meaning": "Happiness, fulfillment, emotional security"
+    },
+    {
+      "name": "Ace of Pentacles",
+      "arcana": "Minor",
+      "suit": "Pentacles",
+      "meaning": "New financial opportunity, prosperity, security"
+    },
+    {
+      "name": "Two of Pentacles",
+      "arcana": "Minor",
+      "suit": "Pentacles",
+      "meaning": "Balance, adaptability, time management"
+    },
+    {
+      "name": "Three of Pentacles",
+      "arcana": "Minor",
+      "suit": "Pentacles",
+      "meaning": "Teamwork, collaboration, skill development"
+    },
+    {
+      "name": "King of Swords",
+      "arcana": "Minor",
+      "suit": "Swords",
+      "meaning": "Clarity, authority, intellect, discipline"
+    },
+    {
+      "name": "Queen of Wands",
+      "arcana": "Minor",
+      "suit": "Wands",
+      "meaning": "Confidence, independence, charisma, determination"
+    }
+  ]
+  

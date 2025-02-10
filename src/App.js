@@ -1,7 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import TarotApp from './TarotApp'; // Import the TarotApp component
 
-function App() {
-    return <h1>Welcome to the Tarot App</h1>;
-}
-
-export default App;
+ReactDOM.render(<TarotApp />, document.getElementById('root'));
