@@ -65,7 +65,7 @@ async function getTarotReading(question, cards) {
                           - **Present Card:** ${cards[1].name}
                           - **Future Card:** ${cards[2].name}
                           
-                          Provide a detailed 3-paragraph reading:
+                          Provide a 3-paragraph reading, aprox 30-50 words each:
                           - The first paragraph explains how the **past card** influences the querent's life.
                           - The second paragraph explains the meaning of the **present card** in their current situation.
                           - The third paragraph describes the **future card**, predicting potential outcomes or guidance.

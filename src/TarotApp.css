@@ -257,7 +257,7 @@ body::before {
     left: 0;
     width: 300%;
     height: 300%;
-    background: url('../public/fog2.png') repeat;
+    background: url('../public/fog.png') repeat;
     background-size: contain;
     opacity: 0;
     transition: opacity 3s ease-in-out, transform 3s ease-in-out;
@@ -340,4 +340,55 @@ body::before {
     font-size: 16px;
     line-height: 1.5;
     color: white;
+}
+
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        flex-direction: row; /* Keeps cards in one row */
+        flex-wrap: nowrap; /* Prevents wrapping but allows scrolling */
+        overflow-x: auto; /* Enables horizontal scrolling if needed */
+        justify-content: flex-start;
+        padding: 0 10px;
+        gap: 10px;
+    }
+
+    .card {
+        width: 8vw; /* Scales dynamically based on screen width */
+        max-width: 100px; /* Ensures they don’t get too big */
+        min-width: 100px; /* Prevents shrinking too much */
+    }
+
+    .reading-grid {
+        flex-direction: column; /* Stack past, present, future */
+        align-items: center;
+        gap: 10px;
+    }
+
+    .reading-column {
+        width: 90%; /* Makes it take most of the screen width */
+        max-width: 400px; /* Prevents it from being too wide */
+    }
+
+    /* 📜 Ensure Modal Container is Scrollable */
+    .tarot-reading-container {
+        width: 60%; /* More space on mobile */
+        max-width: 600px; /* Limit width */
+        max-height: 90vh; /* Ensure it doesn't overflow screen */
+        overflow-y: auto; /* Enable scrolling inside the modal */
+        padding: 20px;
+    }
+
+    /* 🌌 Allow scrolling when modal is open */
+    .modal-overlay {
+        overflow-y: auto; /* Allow scrolling */
+        align-items: flex-start; /* Align content from top */
+        padding: 20px 0;
+    }
+
+    /* 🌍 Allow full-body scrolling */
+    body {
+        overflow-y: auto;
+        height: auto;
+    }
 }
