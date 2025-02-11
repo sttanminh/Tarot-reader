@@ -257,7 +257,7 @@ body::before {
     left: 0;
     width: 300%;
     height: 300%;
-    background: url('../public/fog.png') repeat;
+    background: url('../public/fog2.png') repeat;
     background-size: contain;
     opacity: 0;
     transition: opacity 3s ease-in-out, transform 3s ease-in-out;
@@ -390,5 +390,10 @@ body::before {
     body {
         overflow-y: auto;
         height: auto;
+    }
+
+    .fog-overlay {
+        top: 50vh; /* Shift fog down */
+        transform: translateY(50vh) scale(2); /* Moves fog down */
     }
 }
