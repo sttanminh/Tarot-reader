@@ -101,6 +101,8 @@ function TarotApp() {
   const [fogActive, setFogActive] = useState(false);
   const [fogVisible, setFogVisible] = useState(false);
   const [language, setLanguage] = useState("en"); // Default to English
+  const [showLanguageToggle, setShowLanguageToggle] = useState(true); // Initially visible
+
 
 
 
@@ -163,6 +165,7 @@ function TarotApp() {
     }
 
     setShowQuestionSection(false);
+    setShowLanguageToggle(false);
 
     setTimeout(() => {
     const shuffledDeck = [...tarotCards];
@@ -225,9 +228,11 @@ function TarotApp() {
     <div className="container">
       <div className="dark-overlay"></div> 
 
-      <button className="language-toggle" onClick={() => setLanguage(language === "en" ? "vi" : "en")}>
-        {language === "en" ? "🇻🇳 Tiếng Việt" : "🇬🇧 English"}
-      </button>
+      {showLanguageToggle && (
+        <button className="language-toggle" onClick={() => setLanguage(language === "en" ? "vi" : "en")}>
+          {language === "en" ? "🇻🇳 Tiếng Việt" : "🇬🇧 English"}
+        </button>
+      )}
       <h1>{language === "en" ? "Tarot Card Reading" : "Bói Bài Tarot"}</h1>
 
 
