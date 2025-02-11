@@ -14,25 +14,27 @@ export async function getTarotReading(question, cards, language = "en") {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const prompt = language === "en"
-      ? `Each tarot card represents past, present, and future. Interpret the meaning of:\n\n
-        - **Past Card:** ${cards[0].name}
-        - **Present Card:** ${cards[1].name}
-        - **Future Card:** ${cards[2].name}
-        
-        Provide a 3-paragraph reading (30-50 words each):\n
-        1. Past: Explain how the past card influences the querent's past.\n
-        2. Present: Describe the current impact of the present card.\n
-        3. Future: Predict potential outcomes based on the future card.`
-      : `Mỗi lá bài tarot đại diện cho quá khứ, hiện tại và tương lai. Giải thích ý nghĩa của:\n\n
-        - **Quá khứ:** ${cards[0].name}
-        - **Hiện tại:** ${cards[1].name}
-        - **Tương lai:** ${cards[2].name}
-        
-        Viết bài đọc gồm 3 đoạn (30-50 từ mỗi đoạn):\n
-        1. Quá khứ: Giải thích ảnh hưởng của lá bài quá khứ.\n
-        2. Hiện tại: Mô tả ảnh hưởng của lá bài hiện tại.\n
-        3. Tương lai: Dự đoán kết quả có thể xảy ra dựa trên lá bài tương lai.
-        Tra loi bang tieng viet`;
+    ? `Each tarot card represents past, present, and future. Interpret the meaning of:\n\n
+    - **Past Card:** ${cards[0].name}
+    - **Present Card:** ${cards[1].name}
+    - **Future Card:** ${cards[2].name}
+    
+    Provide a 4-paragraph reading (30-50 words each):\n
+    1. **Past:** Explain how the past card influences the querent's past.\n
+    2. **Present:** Describe the current impact of the present card.\n
+    3. **Future:** Predict potential outcomes based on the future card.\n
+    4. **Overall:** Summarize the overall message, connecting past, present, and future insights.`
+  : `Mỗi lá bài tarot đại diện cho quá khứ, hiện tại và tương lai. Giải thích ý nghĩa của:\n\n
+    - **Quá khứ:** ${cards[0].name}
+    - **Hiện tại:** ${cards[1].name}
+    - **Tương lai:** ${cards[2].name}
+    
+    Viết bài đọc gồm 4 đoạn (30-50 từ mỗi đoạn):\n
+    1. **Quá khứ:** Giải thích ảnh hưởng của lá bài quá khứ.\n
+    2. **Hiện tại:** Mô tả ảnh hưởng của lá bài hiện tại.\n
+    3. **Tương lai:** Dự đoán kết quả có thể xảy ra dựa trên lá bài tương lai.\n
+    4. **Tổng quan:** Tóm tắt thông điệp tổng thể, kết nối các lá bài trong bài bói.
+    Trả lời bằng tiếng Việt.`;
 
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -275,6 +277,10 @@ function TarotApp() {
         <div className="reading-column">
             <h3>{language === "en" ? "Future" : "Tương lai"}</h3>
             <p>{tarotReading.split("\n\n")[2]}</p>
+        </div>
+        <div className="reading-column">
+            <h3>{language === "en" ? "Overall" : "Tổng quan"}</h3>
+            <p>{tarotReading.split("\n\n")[3]}</p>
         </div>
     </div>
 
