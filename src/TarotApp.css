@@ -361,6 +361,11 @@ body::before {
     z-index: 1;
 }
 
+.question-display{
+    font-weight: 900;
+    color: #ffffff;
+}
+
 @media screen and (max-width: 768px) {
     .card-container {
         flex-direction: row; /* Keeps cards in one row */

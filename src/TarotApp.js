@@ -248,7 +248,12 @@ function TarotApp() {
           <button onClick={drawCards} className="button">{language === "en" ? "Draw 3 Cards" : "Rút 3 Lá Bài"}</button>
         </div>
       )}
-
+      {selectedCards.length > 0 && (
+  <div className="question-display">
+    <h2>{language === "en" ? "Your Question:" : "Câu hỏi của bạn:"}</h2>
+    <p>{question}</p>
+  </div>
+)}
       {selectedCards.length > 0 && (
         <div className="card-container">
           {selectedCards.map((card, index) => (
