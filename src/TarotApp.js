@@ -165,8 +165,12 @@ function TarotApp() {
     setShowQuestionSection(false);
 
     setTimeout(() => {
-      const shuffled = [...tarotCards].sort(() => Math.random() - 0.5);
-      const drawnCards = shuffled.slice(0, 3).map(card => ({ ...card, revealed: false }));
+    const shuffledDeck = [...tarotCards];
+    for (let i = shuffledDeck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledDeck[i], shuffledDeck[j]] = [shuffledDeck[j], shuffledDeck[i]];
+    }
+      const drawnCards = shuffledDeck.slice(0, 3).map(card => ({ ...card, revealed: false }));
       setSelectedCards(drawnCards);
 
       setTimeout(() => {
