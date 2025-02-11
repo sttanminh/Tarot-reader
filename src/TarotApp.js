@@ -14,27 +14,39 @@ export async function getTarotReading(question, cards, language = "en") {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const prompt = language === "en"
-    ? `Each tarot card represents past, present, and future. Interpret the meaning of:\n\n
-    - **Past Card:** ${cards[0].name}
-    - **Present Card:** ${cards[1].name}
-    - **Future Card:** ${cards[2].name}
-    
-    Provide a 4-paragraph reading (30-50 words each):\n
-    1. **Past:** Explain how the past card influences the querent's past.\n
-    2. **Present:** Describe the current impact of the present card.\n
-    3. **Future:** Predict potential outcomes based on the future card.\n
-    4. **Overall:** Summarize the overall message, connecting past, present, and future insights.`
-  : `Mỗi lá bài tarot đại diện cho quá khứ, hiện tại và tương lai. Giải thích ý nghĩa của:\n\n
-    - **Quá khứ:** ${cards[0].name}
-    - **Hiện tại:** ${cards[1].name}
-    - **Tương lai:** ${cards[2].name}
-    
-    Viết bài đọc gồm 4 đoạn (30-50 từ mỗi đoạn):\n
-    1. **Quá khứ:** Giải thích ảnh hưởng của lá bài quá khứ.\n
-    2. **Hiện tại:** Mô tả ảnh hưởng của lá bài hiện tại.\n
-    3. **Tương lai:** Dự đoán kết quả có thể xảy ra dựa trên lá bài tương lai.\n
-    4. **Tổng quan:** Tóm tắt thông điệp tổng thể, kết nối các lá bài trong bài bói.
-    Trả lời bằng tiếng Việt.`;
+    ? `You are a mystical tarot reading assistant. Given the user's question and three drawn tarot cards, provide a detailed 4-paragraph reading.
+        
+        **User's Question:** ${question}
+
+        **Past Card:** ${cards[0].name}  
+        **Present Card:** ${cards[1].name}  
+        **Future Card:** ${cards[2].name}  
+
+        **Instructions:**  
+        - Write a structured tarot reading in 4 paragraphs. 30-40 words each paragraph
+        - **Paragraph 1** (Past): How the past influences the querent's situation.  
+        - **Paragraph 2** (Present): The impact of the present card on their current life.  
+        - **Paragraph 3** (Future): Potential outcomes or guidance from the future card.  
+        - **Paragraph 4** (Overall Message): Summarize key themes, insights, and advice.  
+
+        Keep the reading engaging and insightful.`
+
+      : `Bạn là một trợ lý bói bài tarot huyền bí. Dựa trên câu hỏi của người dùng và ba lá bài đã rút, hãy cung cấp một bài đọc chi tiết gồm 4 đoạn.
+
+        **Câu hỏi của người dùng:** ${question}
+
+        **Lá bài Quá khứ:** ${cards[0].name}  
+        **Lá bài Hiện tại:** ${cards[1].name}  
+        **Lá bài Tương lai:** ${cards[2].name}  
+
+        **Hướng dẫn:**  
+        - Viết bài đọc gồm 4 đoạn văn. 30-40 tu moi đoạn
+        - **Đoạn 1** (Quá khứ): Ảnh hưởng của lá bài quá khứ đến người hỏi.  
+        - **Đoạn 2** (Hiện tại): Tác động của lá bài hiện tại đến cuộc sống hiện tại.  
+        - **Đoạn 3** (Tương lai): Dự đoán hoặc lời khuyên từ lá bài tương lai.  
+        - **Đoạn 4** (Tổng quan): Tóm tắt những thông điệp chính và lời khuyên chung.  
+
+        Trả lời bằng tiếng Việt, rõ ràng và có chiều sâu.`;
 
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -49,7 +61,7 @@ export async function getTarotReading(question, cards, language = "en") {
           { role: "system", content: "You are a mystical tarot reading assistant." },
           { role: "user", content: prompt }
         ],
-        max_tokens: 600
+        max_tokens: 1000
       })
     });
 
