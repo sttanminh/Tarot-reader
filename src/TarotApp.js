@@ -49,7 +49,7 @@ export async function getTarotReading(question, cards, language = "en") {
           { role: "system", content: "You are a mystical tarot reading assistant." },
           { role: "user", content: prompt }
         ],
-        max_tokens: 300
+        max_tokens: 600
       })
     });
 
