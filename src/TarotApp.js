@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import tarotCards from "./tarot_cards.json";
 import tarotQuestions from "./tarot_questions.json";
+import tarotQuestionsVi from "./tarot_questions_vietnamese.json";
 import "./TarotApp.css";
 
 // src/api/getTarotReading.js
@@ -123,8 +124,9 @@ function TarotApp() {
 
 
   useEffect(() => {
-    getRandomQuestions();
-  }, []);
+    getRandomQuestions(); // 🔄 Fetch new questions when language changes
+}, [language]); // 👈 Trigger when language updates
+
 
   useEffect(() => {
     if (selectedCards.length > 0 && selectedCards.every(card => card.revealed)) {
@@ -133,15 +135,16 @@ function TarotApp() {
   }, [selectedCards]);
 
   const getRandomQuestions = () => {
-    const shuffled = [...tarotQuestions].sort(() => Math.random() - 0.5);
+    const questions = language === "en" ? tarotQuestions : tarotQuestionsVi;
+    const shuffled = [...questions].sort(() => Math.random() - 0.5);
     setRandomQuestions(shuffled.slice(0, 5));
-  };
+};
 
   
 
   const drawCards = () => {
     if (!question.trim()) {
-      alert(language === "en" ? "Please draw 3 cards first!" : "Vui lòng rút 3 lá bài trước!");
+      alert(language === "en" ? "Please input your question first!" : "Vui lòng nhập câu hỏi trước!");
       return;
     }
 
@@ -202,6 +205,8 @@ function TarotApp() {
 
   return (
     <div className="container">
+      <div className="dark-overlay"></div> 
+
       <button className="language-toggle" onClick={() => setLanguage(language === "en" ? "vi" : "en")}>
         {language === "en" ? "🇻🇳 Tiếng Việt" : "🇬🇧 English"}
       </button>
@@ -218,13 +223,13 @@ function TarotApp() {
             className="input-field"
           />
 
-          <div className="recommended-questions">
-            {randomQuestions.map((q, index) => (
+      <div className="recommended-questions">
+          {randomQuestions.map((q, index) => (
               <button key={index} onClick={() => setQuestion(q)} className="question-button">
-                {q}
+                  {q}
               </button>
-            ))}
-          </div>
+          ))}
+      </div>
 
           <button onClick={drawCards} className="button">{language === "en" ? "Draw 3 Cards" : "Rút 3 Lá Bài"}</button>
         </div>
