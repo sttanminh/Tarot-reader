@@ -31,7 +31,7 @@ body::before {
     min-height: 100vh;
     text-align: center;
     padding: 20px;
-    margin-top: 10vh;
+    margin-top: 0vh;
 }
 
 /* ✨ Input field */
@@ -287,7 +287,7 @@ body::before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 70%;
     padding: 30px;
     border-radius: 10px;
     background: rgba(43, 43, 43, 0.8); /* Reduced darkness */

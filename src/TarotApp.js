@@ -3,99 +3,74 @@ import tarotCards from "./tarot_cards.json";
 import tarotQuestions from "./tarot_questions.json";
 import "./TarotApp.css";
 
+// src/api/getTarotReading.js
 const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
-if (!OPENAI_API_KEY) {
-  console.error("Missing OpenAI API Key! Make sure your .env file is set up.");
-}
 
-const getCardImageURL = (card) => {
-  let imageName = "";
-
-  const majorArcanaMapping = {
-    "The Fool": "00", "The Magician": "01", "The High Priestess": "02", "The Empress": "03",
-    "The Emperor": "04", "The Hierophant": "05", "The Lovers": "06", "The Chariot": "07",
-    "Strength": "08", "The Hermit": "09", "Wheel Of Fortune": "10", "Justice": "11",
-    "The Hanged Man": "12", "Death": "13", "Temperance": "14", "The Devil": "15",
-    "The Tower": "16", "The Star": "17", "The Moon": "18", "The Sun": "19",
-    "Judgement": "20", "The World": "21"
-  };
-
-  if (card.arcana === "Major") {
-    if (majorArcanaMapping[card.name]) {
-      imageName = `${majorArcanaMapping[card.name]}-${card.name.replace(/\s+/g, "")}.jpg`;
-    }
-  } else if (card.arcana === "Minor") {
-    const rankMapping = {
-      "Ace": "01", "Two": "02", "Three": "03", "Four": "04", "Five": "05",
-      "Six": "06", "Seven": "07", "Eight": "08", "Nine": "09", "Ten": "10",
-      "Page": "11", "Knight": "12", "Queen": "13", "King": "14"
-    };
-
-    const [rank, suit] = card.name.split(" of ");
-    if (rankMapping[rank]) {
-      imageName = `${suit}${rankMapping[rank]}.jpg`;
-    }
-  }
-
-  return `/cards/${imageName}`;
-};
-
-async function getTarotReading(question, cards) {
-  console.log("Using API Key:", OPENAI_API_KEY);
+export async function getTarotReading(question, cards, language = "en") {
+  console.log("Using OpenAI API Key:", OPENAI_API_KEY);
 
   try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${OPENAI_API_KEY}`
-          },
-          body: JSON.stringify({
-              model: "gpt-3.5-turbo-0125",
-              messages: [
-                  { role: "system", content: "You are a mystical tarot reading assistant. Provide detailed interpretations for each card in a past, present, and future reading format." },
-                  { 
-                      role: "user", 
-                      content: `
-                          **Tarot Reading Request**
-                          - **Question:** ${question}
-                          - **Past Card:** ${cards[0].name}
-                          - **Present Card:** ${cards[1].name}
-                          - **Future Card:** ${cards[2].name}
-                          
-                          Provide a 3-paragraph reading, aprox 30-50 words each:
-                          - The first paragraph explains how the **past card** influences the querent's life.
-                          - The second paragraph explains the meaning of the **present card** in their current situation.
-                          - The third paragraph describes the **future card**, predicting potential outcomes or guidance.
-                      `
-                  }
-              ],
-              max_tokens: 300
-          })
-      });
+    const prompt = language === "en"
+      ? `Each tarot card represents past, present, and future. Interpret the meaning of:\n\n
+        - **Past Card:** ${cards[0].name}
+        - **Present Card:** ${cards[1].name}
+        - **Future Card:** ${cards[2].name}
+        
+        Provide a 3-paragraph reading (30-50 words each):\n
+        1. Past: Explain how the past card influences the querent's past.\n
+        2. Present: Describe the current impact of the present card.\n
+        3. Future: Predict potential outcomes based on the future card.`
+      : `Mỗi lá bài tarot đại diện cho quá khứ, hiện tại và tương lai. Giải thích ý nghĩa của:\n\n
+        - **Quá khứ:** ${cards[0].name}
+        - **Hiện tại:** ${cards[1].name}
+        - **Tương lai:** ${cards[2].name}
+        
+        Viết bài đọc gồm 3 đoạn (30-50 từ mỗi đoạn):\n
+        1. Quá khứ: Giải thích ảnh hưởng của lá bài quá khứ.\n
+        2. Hiện tại: Mô tả ảnh hưởng của lá bài hiện tại.\n
+        3. Tương lai: Dự đoán kết quả có thể xảy ra dựa trên lá bài tương lai.
+        Tra loi bang tieng viet`;
 
-      if (response.status === 429) {
-          throw new Error("Too many requests! Slow down or check your OpenAI quota.");
-      }
 
-      if (!response.ok) {
-          throw new Error(`API error: ${response.statusText}`);
-      }
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo-0125",
+        messages: [
+          { role: "system", content: "You are a mystical tarot reading assistant." },
+          { role: "user", content: prompt }
+        ],
+        max_tokens: 300
+      })
+    });
 
-      const data = await response.json();
+    if (response.status === 429) {
+      throw new Error("Too many requests! Slow down or check your OpenAI quota.");
+    }
 
-      if (data.choices && data.choices.length > 0) {
-          return data.choices[0].message.content;
-      } else {
-          throw new Error("Invalid response from OpenAI API");
-      }
+    if (!response.ok) {
+      throw new Error(`API error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (data.choices && data.choices.length > 0) {
+      return data.choices[0].message.content;
+    } else {
+      throw new Error("Invalid response from OpenAI API");
+    }
   } catch (error) {
-      console.error("Error fetching Tarot reading:", error);
-      return "Sorry, I couldn't generate a tarot reading. Please try again later.";
+    console.error("Error fetching Tarot reading:", error);
+    return "Sorry, I couldn't generate a tarot reading. Please try again later.";
   }
 }
+
 
 
 function TarotApp() {
@@ -110,6 +85,42 @@ function TarotApp() {
   const [showReading, setShowReading] = useState(false);
   const [fogActive, setFogActive] = useState(false);
   const [fogVisible, setFogVisible] = useState(false);
+  const [language, setLanguage] = useState("en"); // Default to English
+
+
+
+  const getCardImageURL = (card) => {
+    let imageName = "";
+  
+    const majorArcanaMapping = {
+      "The Fool": "00", "The Magician": "01", "The High Priestess": "02", "The Empress": "03",
+      "The Emperor": "04", "The Hierophant": "05", "The Lovers": "06", "The Chariot": "07",
+      "Strength": "08", "The Hermit": "09", "Wheel Of Fortune": "10", "Justice": "11",
+      "The Hanged Man": "12", "Death": "13", "Temperance": "14", "The Devil": "15",
+      "The Tower": "16", "The Star": "17", "The Moon": "18", "The Sun": "19",
+      "Judgement": "20", "The World": "21"
+    };
+  
+    if (card.arcana === "Major") {
+      if (majorArcanaMapping[card.name]) {
+        imageName = `${majorArcanaMapping[card.name]}-${card.name.replace(/\s+/g, "")}.jpg`;
+      }
+    } else if (card.arcana === "Minor") {
+      const rankMapping = {
+        "Ace": "01", "Two": "02", "Three": "03", "Four": "04", "Five": "05",
+        "Six": "06", "Seven": "07", "Eight": "08", "Nine": "09", "Ten": "10",
+        "Page": "11", "Knight": "12", "Queen": "13", "King": "14"
+      };
+  
+      const [rank, suit] = card.name.split(" of ");
+      if (rankMapping[rank]) {
+        imageName = `${suit}${rankMapping[rank]}.jpg`;
+      }
+    }
+  
+    return `/cards/${imageName}`;
+  };
+
 
   useEffect(() => {
     getRandomQuestions();
@@ -130,7 +141,7 @@ function TarotApp() {
 
   const drawCards = () => {
     if (!question.trim()) {
-      alert("Please enter a question before drawing the cards.");
+      alert(language === "en" ? "Please draw 3 cards first!" : "Vui lòng rút 3 lá bài trước!");
       return;
     }
 
@@ -161,7 +172,7 @@ function TarotApp() {
         setFogVisible(true); // 4️⃣ Start fog fade-in effect
     }, 50); 
 
-    const response = await getTarotReading(question, selectedCards); // 5️⃣ Call OpenAI API
+    const response = await getTarotReading(question, selectedCards,language); // 5️⃣ Call OpenAI API
 
     setTimeout(() => {
         setTarotReading(response); // 6️⃣ Set the reading text
@@ -191,7 +202,11 @@ function TarotApp() {
 
   return (
     <div className="container">
-      <h1>Tarot Card Reading</h1>
+      <button className="language-toggle" onClick={() => setLanguage(language === "en" ? "vi" : "en")}>
+        {language === "en" ? "🇻🇳 Tiếng Việt" : "🇬🇧 English"}
+      </button>
+      <h1>{language === "en" ? "Tarot Card Reading" : "Bói Bài Tarot"}</h1>
+
 
       {showQuestionSection && (
         <div className="question-section fade-in">
@@ -199,7 +214,7 @@ function TarotApp() {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Enter your question..."
+            placeholder={language === "en" ? "Enter your question..." : "Nhập câu hỏi của bạn..."}
             className="input-field"
           />
 
@@ -211,7 +226,7 @@ function TarotApp() {
             ))}
           </div>
 
-          <button onClick={drawCards} className="button">Draw 3 Cards</button>
+          <button onClick={drawCards} className="button">{language === "en" ? "Draw 3 Cards" : "Rút 3 Lá Bài"}</button>
         </div>
       )}
 
@@ -228,8 +243,8 @@ function TarotApp() {
 
       {selectedCards.length > 0 && (
         <button onClick={getReading} className={`reading-button ${showReadingButton ? "show" : ""}`} disabled={loading}>
-          {loading ? "Getting Reading..." : "Get Reading"}
-        </button>
+        {loading ? (language === "en" ? "Getting Reading..." : "Đang Xem Bói...") : (language === "en" ? "Get Reading" : "Xem Bói")}
+      </button>
       )}
 
       {showModal && (
@@ -240,20 +255,20 @@ function TarotApp() {
         {/* 📜 Tarot Reading (Appears earlier, but fades in slowly) */}
         {/* 📜 Tarot Reading Section (Past, Present, Future) */}
 <div className={`tarot-reading-container ${showReading ? "show" : ""}`}>
-    <h2>Your Tarot Reading</h2>
+<h2>{language === "en" ? "Your Tarot Reading" : "Bài Bói Tarot Của Bạn"}</h2>
 
     {/* 🎴 3-Column Layout */}
     <div className="reading-grid">
         <div className="reading-column">
-            <h3>Past</h3>
+            <h3>{language === "en" ? "Past" : "Quá khứ"}</h3>
             <p>{tarotReading.split("\n\n")[0]}</p>
         </div>
         <div className="reading-column">
-            <h3>Present</h3>
+            <h3>{language === "en" ? "Present" : "Hiện tại"}</h3>
             <p>{tarotReading.split("\n\n")[1]}</p>
         </div>
         <div className="reading-column">
-            <h3>Future</h3>
+            <h3>{language === "en" ? "Future" : "Tương lai"}</h3>
             <p>{tarotReading.split("\n\n")[2]}</p>
         </div>
     </div>
